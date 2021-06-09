@@ -1,0 +1,22 @@
+- name: Download the ansible_tower package
+  get_url: 
+    url:  "https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz"
+    dest: "."
+
+- name: Extract the ansible tower package
+  command: tar -xvzf "ansible-tower-setup-latest.tar.gz"    
+
+- name: Copy the inventory and ansible.cfg file
+  copy: 
+     src: "{{ item }}" 
+     dest: "ansible-tower-setup-latest.tar.gz / {{ item }}"
+  with_items:
+     - inventory
+     - ansible.cfg
+- name: install the tower
+  shell: ./setup.sh
+  args:
+    chdir: ansible-tower-setup-latest.tar.gz
+    
+         
+
